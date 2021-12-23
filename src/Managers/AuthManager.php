@@ -24,6 +24,12 @@ class AuthManager extends BaseManager
         return sprintf($apiUri, urlencode($clientId), urlencode($redirectUri));
     }
 
+    /**
+     * @param  string  $code
+     *
+     * @return EnvatoCredentials|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function handleRedirect($code)
     {
         $clientId = config('laravel-envato.oauth.client_id');
@@ -68,6 +74,10 @@ class AuthManager extends BaseManager
         }
     }
 
+    /**
+     * @return EnvatoCredentials|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function refreshToken()
     {
         $clientId = config('laravel-envato.oauth.client_id');

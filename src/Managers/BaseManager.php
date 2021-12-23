@@ -9,6 +9,9 @@ class BaseManager
     /** @var EnvatoClient */
     private $client;
 
+    /**
+     * @return EnvatoClient
+     */
     public function envatoClient()
     {
         if (empty($this->client)) {

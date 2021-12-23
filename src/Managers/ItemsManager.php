@@ -24,6 +24,13 @@ class ItemsManager extends BaseManager
         return $this->envatoClient()->performGet('/v3/market/catalog/item', ['id' => $id]);
     }
 
+    /**
+     * @param  string  $username
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \InfyOmLabs\LaravelEnvato\Exceptions\EnvatoRateLimitException
+     */
     public function userItemsBySite($username)
     {
         return $this->envatoClient()->performGet("v1/market/user-items-by-site:$username.json");
