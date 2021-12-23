@@ -33,7 +33,9 @@ ENVATO_CLIENT_SECRET=
 ENVATO_REDIRECT_URI=
 ```
 
-### Implement User Authentication
+### Authentication
+
+#### OAuth Authentication
 
 Redirect user to the Envato authentication by the following code,
 
@@ -64,6 +66,18 @@ attributes:
 
 You can save these values wherever you want as per your convenience. Remember, you will need these credentials in future
 to make API calls.
+
+#### Persistent Authentication (Personal Token)
+
+If your application do not want to access the personal data of the user, you can use the `personalToken` to make api calls.
+In that case, you need to set `ENVATO_PERSONAL_TOKEN` in your `.env` file and then make ``InfyOmLabs\LaravelEnvato\Auth\EnvatoCredentials` manually by the following code:
+
+```php
+$authCredentials = new EnvatoCredentials();
+$authCredentials->accessToken = config('laravel-envato.personal_token');
+$authCredentials->refreshToken = "";
+$authCredentials->expiresIn = now()->addHours(24);
+```
 
 ### Calling APIs
 
@@ -109,6 +123,72 @@ You can use the `retryAfter` attribute to wait for the specified time and then t
 
 The package will automatically try to refresh the token if it is expired and set the new credentials in Auth Session.
 You can listen for the event `InfyOmLabs\LaravelEnvato\Events\EnvatoCredentialsRefreshed` and refresh the credentials in your storage.
+
+## List of Implementing APIs
+
+### Authentication
+
+- [Authenticating with OAuth](https://build.envato.com/api/#oauth)
+- [Authenticating with a Personal Token](https://build.envato.com/api/#token)
+
+### Envato Market Catalog
+ 
+[Search for items](https://build.envato.com/api/#search_getSearchItem)
+
+```php
+LaravelEnvato::items()->searchItems([
+    'term' => 'InfyHMS',
+    'site' => 'codecanyon.net',
+]);
+```
+
+[Look up a single item](https://build.envato.com/api/#market_0_getCatalogItem)
+
+```php
+LaravelEnvato::items()->getItem("26344507");
+```
+
+### User Details
+  
+[A user's items by site](https://build.envato.com/api/#market_getUserItemsBySite)
+
+```php
+LaravelEnvato::items()->userItemsBySite("infyomlabs");
+```
+
+[User account details](https://build.envato.com/api/#market_getUser)
+
+```php
+LaravelEnvato::sales()->accountDetails("infyomlabs");
+```
+
+### Private User Details
+
+[List an author's sales](https://build.envato.com/api/#market_0_getAuthorSales)
+
+```php
+LaravelEnvato::sales()->authorSales(1);
+```
+
+[Statement data](https://build.envato.com/api/#market_0_getUserStatement)
+
+```php
+LaravelEnvato::sales()->statement();
+LaravelEnvato::sales()->statement(['page' => $this->page]);
+LaravelEnvato::sales()->statement(['type' => 'Sale Refund', 'page' => $this->page]);
+```
+
+[Look up sale by code](https://build.envato.com/api/#market_0_getAuthorSale)
+
+```php
+LaravelEnvato::sales()->saleByCode("00000000-0000-0000-0000-000000000000");
+```
+
+[Get a user's username](https://build.envato.com/api/#market_getUserUsername)
+
+```php
+LaravelEnvato::user()->getUsername();
+```
 
 ### Testing
 
