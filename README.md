@@ -1,8 +1,9 @@
 # Laravel Envato
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/infyomlabs/laravel-envato.svg?style=flat-square)](https://packagist.org/packages/infyomlabs/laravel-envato)
-[![Total Downloads](https://img.shields.io/packagist/dt/infyomlabs/laravel-envato.svg?style=flat-square)](https://packagist.org/packages/infyomlabs/laravel-envato)
-![GitHub Actions](https://github.com/infyomlabs/laravel-envato/actions/workflows/main.yml/badge.svg)
+[![Total Downloads](https://poser.pugx.org/infyomlabs/laravel-envato/downloads)](https://packagist.org/packages/infyomlabs/laravel-envato)
+[![Monthly Downloads](https://poser.pugx.org/infyomlabs/laravel-envato/d/monthly)](https://packagist.org/packages/infyomlabs/laravel-envato)
+[![Daily Downloads](https://poser.pugx.org/infyomlabs/laravel-envato/d/daily)](https://packagist.org/packages/infyomlabs/laravel-envato)
+[![License](https://poser.pugx.org/infyomlabs/laravel-envato/license)](https://packagist.org/packages/infyomlabs/laravel-envato)
 
 Laravel Wrapper for calling [Envato API](https://build.envato.com/api)
 
