@@ -3,6 +3,7 @@
 namespace InfyOmLabs\LaravelEnvato\Managers;
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use InfyOmLabs\LaravelEnvato\Auth\EnvatoCredentials;
 use InfyOmLabs\LaravelEnvato\Events\EnvatoCredentialsRefreshed;
 
@@ -90,7 +91,11 @@ class AuthManager extends BaseManager
             'client_secret' => $clientSecret,
         ];
 
-        $response = $this->envatoClient()->getClient()->request('POST', 'token', [
+        $client = new Client([
+            'base_uri' => config('laravel-envato.api_endpoint')
+        ]);
+
+        $response = $client->request('POST', 'token', [
             'form_params' => $params
         ]);
 
