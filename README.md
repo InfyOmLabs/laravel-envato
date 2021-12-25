@@ -40,6 +40,9 @@ ENVATO_REDIRECT_URI=
 Redirect user to the Envato authentication by the following code,
 
 ```php
+
+use LaravelEnvato;
+
 $redirectUri = LaravelEnvato::auth()->authRedirect();
 
 return response()->redirectTo($redirectUri);

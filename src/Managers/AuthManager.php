@@ -97,7 +97,6 @@ class AuthManager extends BaseManager
         if ($response->getStatusCode() === 200) {
             $responseBody = json_decode((string) $response->getBody(), true);
             $this->authCredentials->accessToken = $responseBody['access_token'];
-            $this->authCredentials->refreshToken = $responseBody['refresh_token'];
             $this->authCredentials->expiresIn = Carbon::now()->addSeconds($responseBody['expires_in']);
             EnvatoCredentialsRefreshed::dispatch($this->authCredentials);
             return $this->authCredentials;

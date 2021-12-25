@@ -30,7 +30,7 @@ class LaravelEnvatoServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('laravel-envato', function () {
-            return new LaravelEnvato();
+            return new LaravelEnvatoAPIManager();
         });
 
         $this->app->singleton(EnvatoClient::class, function () {
