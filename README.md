@@ -43,6 +43,9 @@ Redirect user to the Envato authentication by the following code,
 
 use LaravelEnvato;
 
+...
+...
+
 $redirectUri = LaravelEnvato::auth()->authRedirect();
 
 return response()->redirectTo($redirectUri);
