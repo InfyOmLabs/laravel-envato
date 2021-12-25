@@ -7,7 +7,7 @@ use InfyOmLabs\LaravelEnvato\Managers\ItemsManager;
 use InfyOmLabs\LaravelEnvato\Managers\SalesManager;
 use InfyOmLabs\LaravelEnvato\Managers\UserManager;
 
-class LaravelEnvatoAPIManager
+class EnvatoAPIManager
 {
     /**
      * @return AuthManager
