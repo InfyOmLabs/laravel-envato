@@ -6,8 +6,10 @@ class ItemsManager extends BaseManager
 {
     /**
      * @param array $params
-     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      */
     public function searchItems($params)
     {
@@ -16,8 +18,10 @@ class ItemsManager extends BaseManager
 
     /**
      * @param string $id
-     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      */
     public function getItem($id)
     {
@@ -25,11 +29,12 @@ class ItemsManager extends BaseManager
     }
 
     /**
-     * @param  string  $username
+     * @param string $username
      *
-     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \InfyOmLabs\LaravelEnvato\Exceptions\EnvatoRateLimitException
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      */
     public function userItemsBySite($username)
     {

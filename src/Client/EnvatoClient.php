@@ -2,12 +2,12 @@
 
 namespace InfyOmLabs\LaravelEnvato\Client;
 
+use Exception;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Response;
 use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoException;
 use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoRateLimitException;
-use Exception;
-use GuzzleHttp\Client;
 use InfyOmLabs\LaravelEnvato\Managers\AuthManager;
 use Psr\Http\Message\ResponseInterface;
 
@@ -32,8 +32,8 @@ class EnvatoClient
         }
 
         $this->client = new Client([
-            'headers' => $headers,
-            'base_uri' => $this->getEndpoint()
+            'headers'  => $headers,
+            'base_uri' => $this->getEndpoint(),
         ]);
     }
 
@@ -54,50 +54,53 @@ class EnvatoClient
     }
 
     /**
-     * @param  string  $url
-     * @param  array  $variables
+     * @param string $url
+     * @param array  $variables
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException|EnvatoRateLimitException
      *
      * @return EnvatoResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException|EnvatoRateLimitException
      */
     public function performGet($url, $variables = [])
     {
         $this->authManager->refreshTokenIfExpired();
 
         $options = [
-            'query' => $variables
+            'query' => $variables,
         ];
 
         return $this->makeApiCall('GET', $url, $options);
     }
 
     /**
-     * @param  string  $url
-     * @param  array  $variables
+     * @param string $url
+     * @param array  $variables
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException|EnvatoRateLimitException
      *
      * @return EnvatoResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException|EnvatoRateLimitException
      */
     public function performPost($url, $variables = [])
     {
         $this->authManager->refreshTokenIfExpired();
 
         $options = [
-            'form_params' => $variables
+            'form_params' => $variables,
         ];
 
         return $this->makeApiCall('POST', $url, $options);
     }
 
     /**
-     * @param  string  $method
-     * @param  string  $url
-     * @param  array  $options
+     * @param string $method
+     * @param string $url
+     * @param array  $options
      *
-     * @return EnvatoResponse
      * @throws EnvatoException
      * @throws EnvatoRateLimitException
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return EnvatoResponse
      */
     private function makeApiCall($method, $url, $options)
     {
@@ -122,7 +125,8 @@ class EnvatoClient
     }
 
     /**
-     * @param  ResponseInterface  $response
+     * @param ResponseInterface $response
+     *
      * @return EnvatoResponse
      */
     private function parseResponse($response)

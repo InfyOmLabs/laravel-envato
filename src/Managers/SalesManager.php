@@ -5,23 +5,27 @@ namespace InfyOmLabs\LaravelEnvato\Managers;
 class SalesManager extends BaseManager
 {
     /**
-     * @param  int  $page
-     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
+     * @param int $page
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      */
     public function authorSales($page = 1)
     {
         $params = [
-            'page' => $page
+            'page' => $page,
         ];
 
         return $this->envatoClient()->performGet('/v3/market/author/sales', $params);
     }
 
     /**
-     * @param  array  $params
-     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
+     * @param array $params
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      */
     public function statement($params = [])
     {
@@ -30,8 +34,10 @@ class SalesManager extends BaseManager
 
     /**
      * @param string $username
-     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      */
     public function accountDetails($username)
     {
@@ -39,12 +45,14 @@ class SalesManager extends BaseManager
     }
 
     /**
-     * @param  string  $code
-     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
+     * @param string $code
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      */
     public function saleByCode($code)
     {
-        return $this->envatoClient()->performGet("v3/market/author/sale", ['code' => $code]);
+        return $this->envatoClient()->performGet('v3/market/author/sale', ['code' => $code]);
     }
 }
