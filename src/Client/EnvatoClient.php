@@ -2,6 +2,9 @@
 
 namespace InfyOmLabs\LaravelEnvato\Client;
 
+use GuzzleHttp\Exception\ClientException;
+use Illuminate\Http\Response;
+use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoException;
 use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoRateLimitException;
 use Exception;
 use GuzzleHttp\Client;
@@ -61,18 +64,11 @@ class EnvatoClient
     {
         $this->authManager->refreshTokenIfExpired();
 
-        $response = [];
-        try {
-            $response = $this->client->request('GET', $url, [
-                'query' => $variables
-            ]);
-        } catch (Exception $e) {
-            if ($e->getCode() == 429) {
-                throw new EnvatoRateLimitException(intval($e->getResponse()->getHeader('Retry-After')[0]));
-            }
-        }
+        $options = [
+            'query' => $variables
+        ];
 
-        return $this->parseResponse($response);
+        return $this->makeApiCall('GET', $url, $options);
     }
 
     /**
@@ -86,18 +82,43 @@ class EnvatoClient
     {
         $this->authManager->refreshTokenIfExpired();
 
-        $response = [];
+        $options = [
+            'form_params' => $variables
+        ];
+
+        return $this->makeApiCall('POST', $url, $options);
+    }
+
+    /**
+     * @param  string  $method
+     * @param  string  $url
+     * @param  array  $options
+     *
+     * @return EnvatoResponse
+     * @throws EnvatoException
+     * @throws EnvatoRateLimitException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function makeApiCall($method, $url, $options)
+    {
         try {
-            $response = $this->client->request('POST', $url, [
-                'form_params' => $variables
-            ]);
+            $response = $this->client->request($method, $url, $options);
+
+            return $this->parseResponse($response);
         } catch (Exception $e) {
-            if ($e->getCode() == 429) {
+            /** @var ClientException $e */
+            if ($e->getCode() === Response::HTTP_TOO_MANY_REQUESTS) {
                 throw new EnvatoRateLimitException(intval($e->getResponse()->getHeader('Retry-After')[0]));
             }
-        }
 
-        return $this->parseResponse($response);
+            $response = $e->getResponse();
+
+            if (isset($response['error']) and isset($response['error_description'])) {
+                throw new EnvatoException($response['error'], $response['error_description'], $e->getCode(), $e);
+            }
+
+            throw $e;
+        }
     }
 
     /**
