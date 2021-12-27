@@ -8,7 +8,8 @@ use InfyOmLabs\LaravelEnvato\Auth\EnvatoCredentials;
 
 class EnvatoCredentialsRefreshed
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     /** @var EnvatoCredentials */
     public $credentials;

@@ -5,8 +5,9 @@ namespace InfyOmLabs\LaravelEnvato\Managers;
 class UserManager extends BaseManager
 {
     /**
-     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
      */
     public function getUsername()
     {

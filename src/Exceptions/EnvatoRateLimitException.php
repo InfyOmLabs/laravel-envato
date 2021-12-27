@@ -13,12 +13,12 @@ class EnvatoRateLimitException extends Exception
     public $retryAfter;
 
     /**
-     * @param  int  $retryAfter
-     * @param  string  $message
-     * @param  int  $code
-     * @param  Throwable|null  $previous
+     * @param int            $retryAfter
+     * @param string         $message
+     * @param int            $code
+     * @param Throwable|null $previous
      */
-    public function __construct($retryAfter, $message = "", $code = 0, Throwable $previous = null)
+    public function __construct($retryAfter, $message = '', $code = 0, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->retryAfter = $retryAfter;
