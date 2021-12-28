@@ -14,9 +14,7 @@ class EnvatoCredentialsRefreshed
     public $credentials;
 
     /**
-     * Create a new event instance.
-     *
-     * @return void
+     * @param EnvatoCredentials $credentials
      */
     public function __construct($credentials)
     {

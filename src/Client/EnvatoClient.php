@@ -9,6 +9,7 @@ use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoRateLimitException;
 use Exception;
 use GuzzleHttp\Client;
 use InfyOmLabs\LaravelEnvato\Managers\AuthManager;
+use InfyOmLabs\LaravelEnvato\Utils\LaravelEnvatoUtils;
 use Psr\Http\Message\ResponseInterface;
 
 class EnvatoClient
@@ -106,18 +107,7 @@ class EnvatoClient
 
             return $this->parseResponse($response);
         } catch (Exception $e) {
-            /** @var ClientException $e */
-            if ($e->getCode() === Response::HTTP_TOO_MANY_REQUESTS) {
-                throw new EnvatoRateLimitException(intval($e->getResponse()->getHeader('Retry-After')[0]));
-            }
-
-            $response = $e->getResponse();
-
-            if (isset($response['error']) and isset($response['error_description'])) {
-                throw new EnvatoException($response['error'], $response['error_description'], $e->getCode(), $e);
-            }
-
-            throw $e;
+            LaravelEnvatoUtils::handleEnvatoException($e);
         }
     }
 

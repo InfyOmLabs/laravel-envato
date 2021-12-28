@@ -3,9 +3,11 @@
 namespace InfyOmLabs\LaravelEnvato\Managers;
 
 use Carbon\Carbon;
+use Exception;
 use GuzzleHttp\Client;
 use InfyOmLabs\LaravelEnvato\Auth\EnvatoCredentials;
 use InfyOmLabs\LaravelEnvato\Events\EnvatoCredentialsRefreshed;
+use InfyOmLabs\LaravelEnvato\Utils\LaravelEnvatoUtils;
 
 class AuthManager extends BaseManager
 {
@@ -95,9 +97,13 @@ class AuthManager extends BaseManager
             'base_uri' => config('laravel-envato.api_endpoint')
         ]);
 
-        $response = $client->request('POST', 'token', [
-            'form_params' => $params
-        ]);
+        try {
+            $response = $client->request('POST', 'token', [
+                'form_params' => $params
+            ]);
+        } catch (Exception $e) {
+            LaravelEnvatoUtils::handleEnvatoException($e);
+        }
 
         if ($response->getStatusCode() === 200) {
             $responseBody = json_decode((string) $response->getBody(), true);
