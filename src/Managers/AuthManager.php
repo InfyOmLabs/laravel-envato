@@ -33,7 +33,6 @@ class AuthManager extends BaseManager
      * @throws \GuzzleHttp\Exception\GuzzleException
      *
      * @return EnvatoCredentials|null
-     * @return EnvatoCredentials|null
      */
     public function handleRedirect($code)
     {
