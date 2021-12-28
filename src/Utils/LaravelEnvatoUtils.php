@@ -11,7 +11,7 @@ use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoRateLimitException;
 class LaravelEnvatoUtils
 {
     /**
-     * @param  Exception  $e
+     * @param Exception $e
      *
      * @throws EnvatoException
      * @throws EnvatoRateLimitException
