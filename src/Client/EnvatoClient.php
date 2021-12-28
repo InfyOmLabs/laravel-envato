@@ -4,8 +4,6 @@ namespace InfyOmLabs\LaravelEnvato\Client;
 
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use Illuminate\Http\Response;
 use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoException;
 use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoRateLimitException;
 use InfyOmLabs\LaravelEnvato\Managers\AuthManager;

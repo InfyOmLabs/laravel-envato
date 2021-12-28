@@ -30,9 +30,9 @@ class AuthManager extends BaseManager
     /**
      * @param string $code
      *
-     * @return EnvatoCredentials|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      *
+     * @return EnvatoCredentials|null
      * @return EnvatoCredentials|null
      */
     public function handleRedirect($code)
