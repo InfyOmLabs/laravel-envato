@@ -16,6 +16,7 @@ class EnvatoAPIManager
     {
         /** @var AuthManager $authManager */
         $authManager = app(AuthManager::class);
+
         return $authManager;
     }
 
@@ -26,6 +27,7 @@ class EnvatoAPIManager
     {
         /** @var ItemsManager $itemsManager */
         $itemsManager = app(ItemsManager::class);
+
         return $itemsManager;
     }
 
@@ -36,6 +38,7 @@ class EnvatoAPIManager
     {
         /** @var SalesManager $salesManager */
         $salesManager = app(SalesManager::class);
+
         return $salesManager;
     }
 
@@ -46,6 +49,7 @@ class EnvatoAPIManager
     {
         /** @var UserManager $userManager */
         $userManager = app(UserManager::class);
+
         return $userManager;
     }
 }

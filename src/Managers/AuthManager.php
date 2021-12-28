@@ -28,10 +28,12 @@ class AuthManager extends BaseManager
     }
 
     /**
-     * @param  string  $code
+     * @param string $code
      *
      * @return EnvatoCredentials|null
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return EnvatoCredentials|null
      */
     public function handleRedirect($code)
     {
@@ -39,14 +41,14 @@ class AuthManager extends BaseManager
         $clientSecret = config('laravel-envato.oauth.client_secret');
 
         $params = [
-            'grant_type' => 'authorization_code',
-            'code' => $code,
-            'client_id' => $clientId,
+            'grant_type'    => 'authorization_code',
+            'code'          => $code,
+            'client_id'     => $clientId,
             'client_secret' => $clientSecret,
         ];
 
         $response = $this->envatoClient()->getClient()->request('POST', 'token', [
-            'form_params' => $params
+            'form_params' => $params,
         ]);
 
         if ($response->getStatusCode() === 200) {
@@ -55,6 +57,7 @@ class AuthManager extends BaseManager
             $authCredentials->accessToken = $responseBody['access_token'];
             $authCredentials->refreshToken = $responseBody['refresh_token'];
             $authCredentials->expiresIn = Carbon::now()->addSeconds($responseBody['expires_in']);
+
             return $authCredentials;
         }
 
@@ -62,7 +65,7 @@ class AuthManager extends BaseManager
     }
 
     /**
-     * @param  EnvatoCredentials  $authCredentials
+     * @param EnvatoCredentials $authCredentials
      */
     public function loadAuthSession($authCredentials)
     {
@@ -78,8 +81,9 @@ class AuthManager extends BaseManager
     }
 
     /**
-     * @return EnvatoCredentials|null
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return EnvatoCredentials|null
      */
     public function refreshToken()
     {
@@ -87,19 +91,19 @@ class AuthManager extends BaseManager
         $clientSecret = config('laravel-envato.oauth.client_secret');
 
         $params = [
-            'grant_type' => 'refresh_token',
+            'grant_type'    => 'refresh_token',
             'refresh_token' => $this->authCredentials->refreshToken,
-            'client_id' => $clientId,
+            'client_id'     => $clientId,
             'client_secret' => $clientSecret,
         ];
 
         $client = new Client([
-            'base_uri' => config('laravel-envato.api_endpoint')
+            'base_uri' => config('laravel-envato.api_endpoint'),
         ]);
 
         try {
             $response = $client->request('POST', 'token', [
-                'form_params' => $params
+                'form_params' => $params,
             ]);
         } catch (Exception $e) {
             LaravelEnvatoUtils::handleEnvatoException($e);
@@ -110,6 +114,7 @@ class AuthManager extends BaseManager
             $this->authCredentials->accessToken = $responseBody['access_token'];
             $this->authCredentials->expiresIn = Carbon::now()->addSeconds($responseBody['expires_in']);
             EnvatoCredentialsRefreshed::dispatch($this->authCredentials);
+
             return $this->authCredentials;
         }
 

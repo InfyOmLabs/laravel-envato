@@ -23,7 +23,7 @@ class EnvatoCredentials implements Arrayable
     public $expiresIn;
 
     /**
-     * @param  array  $input
+     * @param array $input
      */
     public function __construct($input = [])
     {
@@ -46,9 +46,9 @@ class EnvatoCredentials implements Arrayable
     public function toArray()
     {
         return [
-            'access_token' => $this->accessToken,
+            'access_token'  => $this->accessToken,
             'refresh_token' => $this->refreshToken,
-            'expires_in' => $this->expiresIn,
+            'expires_in'    => $this->expiresIn,
         ];
     }
 }
