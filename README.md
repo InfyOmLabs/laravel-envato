@@ -95,9 +95,9 @@ do that by the following code:
 ```php
 
 $envatoCredentials = new \InfyOmLabs\LaravelEnvato\Auth\EnvatoCredentials([
-    'accessToken' => '',
-    'refreshToken' => '',
-    'expiresIn' => '',
+    'access_token' => '',
+    'refresh_token' => '',
+    'expires_in' => '',
 ]);
 
 LaravelEnvato::auth()->loadAuthSession($envatoCredentials);
