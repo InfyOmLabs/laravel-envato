@@ -21,6 +21,22 @@ class SalesManager extends BaseManager
     }
 
     /**
+     * @param string $code
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return \InfyOmLabs\LaravelEnvato\Client\EnvatoResponse
+     */
+    public function authorSaleByCode($code)
+    {
+        $params = [
+            'code' => $code,
+        ];
+
+        return $this->envatoClient()->performGet('/v3/market/author/sale', $params);
+    }
+
+    /**
      * @param array $params
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
