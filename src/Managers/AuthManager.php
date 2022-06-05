@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
 use InfyOmLabs\LaravelEnvato\Auth\EnvatoCredentials;
+use InfyOmLabs\LaravelEnvato\Client\EnvatoClient;
 use InfyOmLabs\LaravelEnvato\Events\EnvatoCredentialsRefreshed;
 use InfyOmLabs\LaravelEnvato\Utils\LaravelEnvatoUtils;
 
@@ -112,6 +113,11 @@ class AuthManager extends BaseManager
             $responseBody = json_decode((string) $response->getBody(), true);
             $this->authCredentials->accessToken = $responseBody['access_token'];
             $this->authCredentials->expiresIn = Carbon::now()->addSeconds($responseBody['expires_in']);
+
+            /** @var EnvatoClient $envatoClient */
+            $envatoClient = app(EnvatoClient::class);
+            $envatoClient->initClient();
+
             EnvatoCredentialsRefreshed::dispatch($this->authCredentials);
 
             return $this->authCredentials;
