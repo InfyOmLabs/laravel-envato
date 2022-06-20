@@ -75,7 +75,10 @@ class AuthManager extends BaseManager
 
     public function refreshTokenIfExpired()
     {
-        if ($this->authCredentials->expiresIn->isPast()) {
+        $expiresIn = $this->authCredentials->expiresIn->copy();
+
+        // if token is going to expire in next 5 minutes, refresh token 5 minutes early
+        if ($expiresIn->subMinutes(5)->isPast()) {
             $this->refreshToken();
         }
     }
