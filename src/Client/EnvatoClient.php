@@ -108,7 +108,7 @@ class EnvatoClient
 
             return $this->parseResponse($response);
         } catch (Exception $e) {
-            LaravelEnvatoUtils::handleEnvatoException($e);
+            LaravelEnvatoUtils::handleEnvatoException($e, $options);
         }
     }
 

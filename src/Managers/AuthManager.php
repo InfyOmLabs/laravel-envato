@@ -104,12 +104,12 @@ class AuthManager extends BaseManager
             'base_uri' => config('laravel-envato.api_endpoint'),
         ]);
 
+        $options = ['form_params' => $params];
+
         try {
-            $response = $client->request('POST', 'token', [
-                'form_params' => $params,
-            ]);
+            $response = $client->request('POST', 'token', $options);
         } catch (Exception $e) {
-            LaravelEnvatoUtils::handleEnvatoException($e);
+            LaravelEnvatoUtils::handleEnvatoException($e, $options);
         }
 
         if ($response->getStatusCode() === 200) {

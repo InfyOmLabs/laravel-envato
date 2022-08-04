@@ -16,7 +16,7 @@ class LaravelEnvatoUtils
      * @throws EnvatoException
      * @throws EnvatoRateLimitException
      */
-    public static function handleEnvatoException($e)
+    public static function handleEnvatoException($e, $errorData = [])
     {
         /** @var ClientException $e */
         if ($e->getCode() === Response::HTTP_TOO_MANY_REQUESTS) {
@@ -26,7 +26,7 @@ class LaravelEnvatoUtils
         $response = json_decode($e->getResponse()->getBody()->getContents(), true);
 
         if (isset($response['error']) and isset($response['error_description'])) {
-            throw new EnvatoException($response['error'], $response['error_description'], $e->getCode(), $e);
+            throw new EnvatoException($response['error'], $response['error_description'], $e->getCode(), $e, $errorData);
         }
 
         throw $e;
