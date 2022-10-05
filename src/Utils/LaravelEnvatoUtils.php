@@ -4,6 +4,7 @@ namespace InfyOmLabs\LaravelEnvato\Utils;
 
 use Exception;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Response;
 use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoException;
 use InfyOmLabs\LaravelEnvato\Exceptions\EnvatoRateLimitException;
@@ -23,10 +24,14 @@ class LaravelEnvatoUtils
             throw new EnvatoRateLimitException(intval($e->getResponse()->getHeader('Retry-After')[0]));
         }
 
-        $response = json_decode($e->getResponse()->getBody()->getContents(), true);
+        if ($e instanceof RequestException) {
+            if ($e->hasResponse()) {
+                $response = json_decode($e->getResponse()->getBody()->getContents(), true);
 
-        if (isset($response['error']) and isset($response['error_description'])) {
-            throw new EnvatoException($response['error'], $response['error_description'], $e->getCode(), $e, $errorData);
+                if (isset($response['error']) and isset($response['error_description'])) {
+                    throw new EnvatoException($response['error'], $response['error_description'], $e->getCode(), $e, $errorData);
+                }
+            }
         }
 
         throw $e;
