@@ -4,6 +4,7 @@ namespace InfyOmLabs\LaravelEnvato;
 
 use InfyOmLabs\LaravelEnvato\Managers\AuthManager;
 use InfyOmLabs\LaravelEnvato\Managers\ItemsManager;
+use InfyOmLabs\LaravelEnvato\Managers\PurchasesManager;
 use InfyOmLabs\LaravelEnvato\Managers\SalesManager;
 use InfyOmLabs\LaravelEnvato\Managers\UserManager;
 
@@ -51,5 +52,16 @@ class EnvatoAPIManager
         $userManager = app(UserManager::class);
 
         return $userManager;
+    }
+
+    /**
+     * @return PurchasesManager
+     */
+    public function purchases()
+    {
+        /** @var PurchasesManager $purchasesManager */
+        $purchasesManager = app(PurchasesManager::class);
+
+        return $purchasesManager;
     }
 }
