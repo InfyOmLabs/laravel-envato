@@ -8,6 +8,11 @@ use Illuminate\Contracts\Support\Arrayable;
 class EnvatoCredentials implements Arrayable
 {
     /**
+     * @var int
+     */
+    public $id;
+
+    /**
      * @var string
      */
     public $accessToken;
@@ -27,6 +32,10 @@ class EnvatoCredentials implements Arrayable
      */
     public function __construct($input = [])
     {
+        if (isset($input['id'])) {
+            $this->id = $input['id'];
+        }
+
         if (isset($input['access_token'])) {
             $this->accessToken = $input['access_token'];
         }
@@ -46,6 +55,7 @@ class EnvatoCredentials implements Arrayable
     public function toArray()
     {
         return [
+            'id'  => $this->id,
             'access_token'  => $this->accessToken,
             'refresh_token' => $this->refreshToken,
             'expires_in'    => $this->expiresIn,
