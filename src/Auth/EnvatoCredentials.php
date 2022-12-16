@@ -55,7 +55,7 @@ class EnvatoCredentials implements Arrayable
     public function toArray()
     {
         return [
-            'id'  => $this->id,
+            'id'            => $this->id,
             'access_token'  => $this->accessToken,
             'refresh_token' => $this->refreshToken,
             'expires_in'    => $this->expiresIn,
