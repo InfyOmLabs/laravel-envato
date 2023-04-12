@@ -28,9 +28,18 @@ class LaravelEnvatoUtils
             if ($e->hasResponse()) {
                 $response = json_decode($e->getResponse()->getBody()->getContents(), true);
 
-                if (isset($response['error']) and isset($response['error_description'])) {
-                    throw new EnvatoException($response['error'], $response['error_description'], $e->getCode(), $e, $errorData);
+                if (!isset($response['error'])) {
+                    throw $e;
                 }
+
+                $error = $response['error'];
+                $message = $e->getMessage();
+
+                if (isset($response['error_description'])) {
+                    $message = $response['error_description'];
+                }
+
+                throw new EnvatoException($error, $message, $e->getCode(), $e, $errorData);
             }
         }
 
